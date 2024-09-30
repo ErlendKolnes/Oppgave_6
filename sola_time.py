@@ -2,10 +2,8 @@
 
 
 
-
-
-
 def splitsolatime(data):
+
     #parts = data.replace(';;', ';')
 
 
@@ -23,7 +21,11 @@ def splitsolatime(data):
         s_time = s_date_time[1]
         
     # Hent andre målinger
-    s_trykk = s_parts[4].replace(",", ".")
+
+    s_trykk_n = s_parts[4].replace(",", ".")
+    s_trykk_n = s_parts[4].split()
+    s_trykk = s_trykk_n[0]
+
     s_temp = s_parts[3].replace(",", ".")
     
     return s_date, s_time, s_trykk, s_temp
