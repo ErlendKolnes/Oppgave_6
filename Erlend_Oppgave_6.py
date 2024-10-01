@@ -55,9 +55,8 @@ r_trykk2s = []
 r_temps = []
 
 
-#r_fil = "temperatur_trykk_met_samme_rune_time_datasett.csv.txt"
+r_fil = "trykk_og_temperaturlogg_rune_time.csv.txt"
 
-r_fil = "C:/Users/erlen/OneDrive/Dokumenter/GitHub/Oppgave_6/temperatur_trykk_met_samme_rune_time_datasett.csv.txt"
 #Linje nr som koden skal ignorere/hoppe over.
 r_ignorer_linje = [1]
 r_antall_tall = len(r_ignorer_linje)
