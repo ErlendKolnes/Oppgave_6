@@ -32,12 +32,13 @@ def splitsolatime(data):
 
 fil_solatime = open("sola_time.csv.txt", "r", encoding="UTF8")
 
-
+#Lager tomme lister til dato, tid, trykk og temp
 s_dato_l = []
 s_tid_l = []
 s_trykk_l = []
 s_temp_l = []
 
+#Splitter opp data og sorterer i overnevnte lister
 for linje in fil_solatime:
     if linje.split(";")[0] == "Sola":
         s_date, s_time, s_trykk, s_temp = splitsolatime(linje)
@@ -48,28 +49,38 @@ for linje in fil_solatime:
 
 s_dato_tid_l = []
 
-for i in range (len(s_dato_l)):
-    s_dato_tid_l.append(s_dato_l[i] + " " + s_tid_l[i])
+# for i in range (len(s_dato_l)):
+#     s_dato_tid_l.append(s_dato_l[i] + " " + s_tid_l[i])
 
 
+#Gjør om dato og tidspunkt til egne lister
+s_ny_dato = []
+s_ny_tid = []
+for i in range(len(s_dato_l)):
+    s_ny_dato.append(s_dato_l[i].split("."))
+    s_ny_tid.append(s_tid_l[i].split(":"))
+
+#lage datetime-liste
+s_dt_dato = []
+for i in range(len(s_ny_dato)):
+    dag = d.datetime(int(s_ny_dato[i][2]), int(s_ny_dato[i][1]), int(s_ny_dato[i][0]), int(s_ny_tid[i][0]), int(s_ny_tid[i][1]))
+    s_dt_dato.append(dag)
 
 print("Her er dato:", "\n", s_dato_l, "\n")
 print("Her er tid:", "\n", s_tid_l, "\n")
 print("Her er temp:", "\n", s_temp_l, "\n")
 print("Her er trykk:", "\n", s_trykk_l, "\n")
-print("Her er dato og tid sammen", "\n", s_dato_tid_l, "\n")
+#print("Her er dato og tid sammen", "\n", s_dato_tid_l, "\n")
 
-plt.plot(s_dato_tid_l, s_temp_l)
-plt.plot(s_dato_tid_l, s_trykk_l)
-plt.xticks(["11.06.2021 01:00", "12.06.2021 00:00", "13.06.2021 00:00", "14.06.2021 00:00"])
+
+#Plotter graf
+#plt.plot(s_dt_dato, s_temp_l, label="Temp")
+plt.plot(s_dt_dato, s_trykk_l, label="Trykk")
+plt.legend()
+#plt.xticks(["11.06.2021 01:00", "12.06.2021 00:00", "13.06.2021 00:00", "14.06.2021 00:00"])
 #plt.yticks([10, 100, 500, 1000, 2000])
 
 
-
-print(len(s_dato_tid_l))
-print(len(s_temp_l))
-print(len(s_trykk_l))
-
 plt.show()
-#datetime_liste = d.datetime(s_dato_tid_l)
+
 fil_solatime.close()
