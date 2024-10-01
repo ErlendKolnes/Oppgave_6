@@ -1,5 +1,5 @@
 # Funksjon for å dele opp strengen i komponenter
-
+import matplotlib.pyplot as plt
 
 
 def splitsolatime(data):
@@ -43,12 +43,15 @@ for linje in fil_solatime:
         s_date, s_time, s_trykk, s_temp = splitsolatime(linje)
         s_dato_l.append(s_date)
         s_tid_l.append(s_time)
-        s_trykk_l.append(s_trykk)
-        s_temp_l.append(s_temp)
+        s_trykk_l.append(float(s_trykk))
+        s_temp_l.append(float(s_temp))
 
 print("Her er dato:", "\n", s_dato_l, "\n")
 print("Her er tid:", "\n", s_tid_l, "\n")
 print("Her er temp:", "\n", s_temp_l, "\n")
 print("Her er trykk:", "\n", s_trykk_l, "\n")
+
+
+plt.plot(s_temp_l, s_trykk_l)
 
 fil_solatime.close()
