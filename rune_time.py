@@ -6,13 +6,16 @@ import datetime as d
 
 
 # Funksjon for å dele opp strengen i komponenter
-def r_split_string(r_data, stop_line):
+def r_split_string(r_data, stop_line,):
+    #if r_ignorer_linje is None:
+    #    r_ignorer_linje = []
+
     try:
         with open(r_data, 'r') as r_fil:
             r_data_linjer = r_fil.readlines()
 
             for linjenummer, linje in enumerate(r_data_linjer, start=1):
-                if linjenummer in [1]:
+                if linjenummer == 1:
                     continue
 
                 elif linjenummer > stop_line:
@@ -36,9 +39,20 @@ def r_split_string(r_data, stop_line):
                     # Hent dato og tid fra første del
                     #Splitter dato og tid i to lister
                     
-                    date_time_1 = parts[0]
+                    date_time_str = parts[0]
+
+                    try:
+                        if "/" in date_time_str:
+                            date_time = d.datetime.strptime(date_time_str, "%m/%d/%Y %I:%M %p")
+                        else:
+                            date_time = d.datetime.strptime(date_time, "%m.%d.%Y %H:%M")
+                    except ValueError:
+                        print(f"Ugyldig dato/tid format på linje {linjenummer}: {parts[0]}")
+                        continue
+
+                    #date_time_2 = date_time_1.replace("am", "").replace("pm", "")
                     
-                    date_time = konvertere_dato_tid(date_time_1)
+                    #date_time = konvertere_dato_tid(date_time)
                     #konvertere_dato_tid(date_time)  
 
 
@@ -165,7 +179,7 @@ r_fil = ("rune_time.csv.txt")
 
 
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = float("inf")
+r_antall_linje = 12500 #float("inf")
 
 
 
