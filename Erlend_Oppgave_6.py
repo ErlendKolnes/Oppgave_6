@@ -130,8 +130,8 @@ def fylle_inn_verdier_b_trykk(b_trykk):
 
 
 
-# Initialiser lister for å lagre komponentene
-# måned.dag.år
+
+# dag.måned.år timer:minutter:sekunder
 r_dates_times = []
 
 # dag.måned.år
