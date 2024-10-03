@@ -1,52 +1,23 @@
 
-#Erlend sitt tull
-
-
-
-
-'''
-def get_value():
-    return 42
-
-result = get_value()
-print(result)  # Output: 42
-'''
-
-'''
-def generate_values():
-    yield 1
-    yield 2
-    yield 3
-
-for value in generate_values():
-    print(value)
-# Output:
-# 1
-# 2
-# 3
-# 
-
- '''
-
-
 
 import  matplotlib.pyplot as plt
-import datetime as dt
+from datetime import datetime
 
 
 # Funksjon for å dele opp strengen i komponenter
-def r_split_string(r_data, stop_line, r_ignorer_linje):
+def r_split_string(r_data, stop_line):
     try:
         with open(r_data, 'r') as r_fil:
             r_data_linjer = r_fil.readlines()
 
             for linjenummer, linje in enumerate(r_data_linjer, start=1):
-                if linjenummer in r_ignorer_linje:
+                if linjenummer in [1]:
                     continue
 
                 elif linjenummer > stop_line:
                     break                 
                 else:
+                    #linje = linje.strip()
                     linje = linje.strip()
 
                     # Del strengen ved semikolon
@@ -56,34 +27,77 @@ def r_split_string(r_data, stop_line, r_ignorer_linje):
                     if len(parts) < 5:
                         continue
                     
-                    
+                    #date_time = parts[0].split()
+                    #if len(date_time) < 2:
+                    #    print(f"Ugyldig dato/tid format på linje {linjenummer}: {parts[0]}")
+                    #    continue
                         
                     # Hent dato og tid fra første del
                     #Splitter dato og tid i to lister
-                    date_time = parts[0].split()
-                    date = date_time[0]
-                    time = date_time[1]
-                        
+                    
+                    date_time_1 = parts[0]
+                    
+                    date_time = konvertere_dato_tid(date_time_1)
+                    #konvertere_dato_tid(date_time)  
+
+
                     # Hent andre målinger                    
                     nr = parts[1]
+
                     trykk1 = parts[2].replace(',', '.')
                     trykk2 = parts[3].replace(',', '.')
                     temp = parts[4].replace(',', '.')
 
-                    yield date, time, nr, trykk1, trykk2, temp
+
+                    
+
+                    yield date_time, nr, trykk1, trykk2, temp
                 
     except FileNotFoundError:
         print(f"Filen {r_data} ble ikke funnet.")
     except Exception as e:
-        print(f"En feil oppstod: {e}")                   
+        print(f"En feil oppstod: {e}")     
+
+
+
+# Funksjon for å korrigere feil som '00:00' i 12-timers format
+def korriger_tid_format(datoer):
+    # Sjekk om tiden inneholder "00:00" med am/pm
+    if "00:00" in datoer and "am" or "pm" in datoer.lower():
+        # Erstatt med riktig representasjon av midnatt
+        return datoer.replace("00:00", "12:00")
+   
+    return datoer
+
+
+
+# Funksjon for å konvertere dato og tid til ønsket format
+def konvertere_dato_tid(datoer):
+
+    datoer = korriger_tid_format(datoer)
+    #sekunder = konvertere_sekunder(sekunder)
 
     
 
-def konvertere_datoformat(datoer):
-    # Konverterer strengen til en datetime-objekt
-    # Konverterer datetime-objektet tilbake til en streng i ønsket format
-    return [dt.datetime.strptime(dato, "%m.%d.%Y").strftime("%d.%m.%Y") for dato in datoer]
+    if "am" in datoer.lower() or "pm" in datoer.lower():     
+        try:
+            dt = datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
+        except ValueError:
+            return datoer
+                
+    else:
+        try:   
+            # Forsøk å analysere dato og tid i det første formatet (måned.dag.år timer:minutter)
+            dt = datetime.strptime(datoer, "%m.%d.%Y %H:%M")
+        except ValueError:
+            return datoer
+                  
+                # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
+              # Returner den opprinnelige strengen hvis analysen mislykkes
     
+    # Returner den formaterte datoen og tiden (dag.måned.år timer:minutter:sekunder)
+    return dt.strftime("%d.%m.%Y %H:%M")
+
 
 
 def konvertere_sekunder(sekunder):
@@ -104,105 +118,73 @@ def kobinere_tider(tider, sekunder):
     return nye_tider
 
 
-def kobinere_dato_og_tider (datoer, tider):
-    kombinert = []
-    for dato, tid in zip(datoer, tider):
-        kombinert.append (f"{dato} {tid}")
-        
-    return kombinert
+#>Fyller inn verider for barometrisk trykk
+#LEgger inn det den sist index veriden som den har lest
+def fylle_inn_verdier_b_trykk(b_trykk):
+    teller = 0
+    for element in b_trykk:
+        if element == '':
+            b_trykk[teller] = b_trykk[teller-1]
+        teller += 1
+
+
+
 
 # Initialiser lister for å lagre komponentene
 # måned.dag.år
-r_dates = []
+r_dates_times = []
+
 # dag.måned.år
-r_dates_k = []
+
 # timer:minutter
 r_times = []
 # nr
 r_nrs = []
 # sekduner
-r_nrs_k = []
+
 # timer:minutter:sekunder
-r_tider_k = []
+
 # dag.måned.år timer:minutter:sekunder
-r_dato_tider_k = []
+
 
 r_trykk_b = []
 r_trykk_a = []
-r_temps = []
+r_temps = []       
+
 
 
 r_fil = ("Oving/Oving_6/trykk_og_temperaturlogg_rune_time.csv.txt")
 
 
-#Endrer back-slah til front-slah i filen
-#r_fil = r_filstil.replace("\\t", "/")
-#r_fil = r_filstil.replace("\\", "/")
-
-
 
 #Linje nr som koden skal ignorere/hoppe over.
-r_ignorer_linje = [1, 20223]
-r_antall_tall = len(r_ignorer_linje)
+
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = 5 + r_antall_tall   
+r_antall_linje = float('inf')
 
 
-# Iterer over hver inn r_data streng og del den opp i komponenter
-for date, time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje, r_ignorer_linje):
-    r_dates.append(date)
-    r_times.append(time)
+
+print (f"Antall linjer {r_antall_linje}")
+
+for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje):
+    r_dates_times.append(date_time)
     r_nrs.append(nr)
     r_trykk_b.append(trykk1)
     r_trykk_a.append(trykk2)
     r_temps.append(temp)
 
 
-#konventer dato formate fra måned.dag til dag.måned
-r_dates_k = konvertere_datoformat(r_dates)
-konvertere_sekunder(r_nrs)
-r_tider_k = kobinere_tider(r_times, r_nrs)
-r_dato_tider_k = kobinere_dato_og_tider(r_dates_k, r_tider_k)
+
+antall_temp_maalinger = len(r_temps)
+fylle_inn_verdier_b_trykk(r_trykk_b)
 
 
-
-#matlab, lager grafer and shit
-x_verdier_1 = r_nrs
-x_verdier_2 = r_times
-y_verdier_1 = r_trykk_b
-y_verdier_2 = r_trykk_a
-y_verdier_3 = r_temps
-
-
-'''
-plt.subplot(1, 1, 1)
-plt.title("Oppgave 6")
-plt.plot(x_verdier_2, y_verdier_2, linestyle = "dashed", marker = "x", label = "Trykk-Barometer", color = "orange");
-plt.plot(x_verdier_1, y_verdier_1, linestyle = "dashed", marker = "x", label = "Absloutt trykk", color = "blue" )
-
-#plt.plot(x_verdier, y_verdier, linestyle = "dashed", marker = "x", label = "x i andre")
-
-
-plt.xlabel("Tid")
-plt.ylabel("Trykkmåliner")
-
-plt.legend()
-#plt.savefig("figuren.pdf")
-plt.show()
-
-
-'''
 
 if __name__ == "__main__":
     # Skriv ut resultatene
-    print(f"Dato og tid: {r_dato_tider_k}")
-    print(f"Datoer: {r_dates}")
-    print(f"Konvertert datoer: {r_dates_k}")
-    print(f"Tider: {r_times}")
+    print(f"Dato og tid: {r_dates_times}")
     print(f"Sekunder: {r_nrs}")
-    print(f"Tider og sekunder: {r_tider_k}")
-    print(f"Konvertert til sekunder: {r_nrs_k}")
     print(f"r_trykk_b: {r_trykk_b}")
     print(f"r_trykk_a: {r_trykk_a}")
     print(f"Tempratur: {r_temps}")
-    
+    print(f"Antall temp maalinger: {antall_temp_maalinger}")
