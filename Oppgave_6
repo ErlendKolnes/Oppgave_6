@@ -1,4 +1,5 @@
 import  matplotlib.pyplot as plt
+from datetime import datetime
 
 
 # Funksjon for å dele opp strengen i komponenter
@@ -64,7 +65,7 @@ r_fil = "trykk_og_temperaturlogg_rune_time.csv.txt"
 r_ignorer_linje = [1]
 r_antall_tall = len(r_ignorer_linje)
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = 100 + r_antall_tall   
+r_antall_linje = 220000 + r_antall_tall   
 
 
 # Iterer over hver inn r_data streng og del den opp i komponenter
@@ -82,9 +83,10 @@ y_verdier = r_trykk2s
 
 plt.subplot(1, 1, 1)
 plt.title("Oppgave 6")
-plt.plot(x_verdier, y_verdier, linestyle = "dashed", marker = "x", label = "x i andre")
-plt.plot(x_verdier, r_trykk1s, linestyle = "dotted", marker = "o", label = "x i første")
+plt.plot(x_verdier, y_verdier, linestyle = "solid", label = "Absolutt trykk")
+plt.plot(x_verdier, r_trykk1s, linestyle = "solid", label = "Barometrisk trykk")
 
+plt.grid()
 plt.xlabel("Tid")
 plt.ylabel("Trykkmåliner")
 
