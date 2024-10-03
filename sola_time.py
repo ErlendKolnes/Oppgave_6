@@ -60,11 +60,13 @@ for i in range(len(s_dato_l)):
     s_ny_tid.append(s_tid_l[i].split(":"))
 
 
+
 #lage datetime-liste
 s_dt_dato = []
 for i in range(len(s_ny_dato)):
     dag = d.datetime(int(s_ny_dato[i][2]), int(s_ny_dato[i][1]), int(s_ny_dato[i][0]), int(s_ny_tid[i][0]), int(s_ny_tid[i][1]))
     s_dt_dato.append(dag)
+
 
 
 #Testing av listene for å sjekke at ting stemmer

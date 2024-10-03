@@ -1,7 +1,8 @@
 
 
 import  matplotlib.pyplot as plt
-from datetime import datetime
+import datetime as d
+#from datetime import datetime
 
 
 # Funksjon for å dele opp strengen i komponenter
@@ -45,8 +46,13 @@ def r_split_string(r_data, stop_line):
                     nr = parts[1]
 
                     trykk1 = parts[2].replace(',', '.')
-                    trykk2 = parts[3].replace(',', '.')
-                    temp = parts[4].replace(',', '.')
+                    trykk2n = parts[3].replace(',', '.')
+                    tempn = parts[4].replace(',', '.')
+
+                    
+                    trykk2 = float(trykk2n)
+                    temp = float(tempn)
+                
 
 
                     
@@ -74,19 +80,20 @@ def korriger_tid_format(datoer):
 # Funksjon for å konvertere dato og tid til ønsket format
 def konvertere_dato_tid(datoer):
 
-    datoer = korriger_tid_format(datoer)
+    
        
 
-    if "am" in datoer.lower() or "pm" in datoer.lower():     
+    if "am" in datoer.lower() or "pm" in datoer.lower():   
+        datoer = korriger_tid_format(datoer)  
         try:
-            dt = datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
+            dt = d.datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
         except ValueError:
             return datoer
                 
     else:
         try:   
             # Forsøk å analysere dato og tid i det første formatet (måned.dag.år timer:minutter)
-            dt = datetime.strptime(datoer, "%m.%d.%Y %H:%M")
+            dt = d.datetime.strptime(datoer, "%m.%d.%Y %H:%M")
         except ValueError:
             return datoer
                   
@@ -94,8 +101,14 @@ def konvertere_dato_tid(datoer):
             # Returner den opprinnelige strengen hvis analysen mislykkes
     
     # Returner den formaterte datoen og tiden (dag.måned.år timer:minutter:sekunder)
-    return dt.strftime("%d.%m.%Y %H:%M")
+    
+    
+    #print(dt)
+    
+    return dt
+   
 
+    
 
 #Ikke i bruk
 def konvertere_sekunder(sekunder):
@@ -123,6 +136,7 @@ def fylle_inn_verdier_b_trykk(b_trykk):
     for element in b_trykk:
         if element == '':
             b_trykk[teller] = b_trykk[teller-1]
+        b_trykk[teller] = float(b_trykk[teller])
         teller += 1
 
 
@@ -151,7 +165,7 @@ r_fil = ("rune_time.csv.txt")
 
 
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = float('inf')
+r_antall_linje = float("inf")
 
 
 
@@ -168,8 +182,11 @@ for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje)
 
 #En teller for å vite hvor mange linjer som blir skrevet ut
 antall_temp_maalinger = len(r_temps)
+antall_dager = len(r_dates_times)
 #En funksjon for å fylle inn verdier på tomme indexer
 fylle_inn_verdier_b_trykk(r_trykk_b)
+
+
 
 
 
