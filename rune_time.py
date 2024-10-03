@@ -75,9 +75,7 @@ def korriger_tid_format(datoer):
 def konvertere_dato_tid(datoer):
 
     datoer = korriger_tid_format(datoer)
-    #sekunder = konvertere_sekunder(sekunder)
-
-    
+       
 
     if "am" in datoer.lower() or "pm" in datoer.lower():     
         try:
@@ -92,14 +90,14 @@ def konvertere_dato_tid(datoer):
         except ValueError:
             return datoer
                   
-                # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
-              # Returner den opprinnelige strengen hvis analysen mislykkes
+            # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
+            # Returner den opprinnelige strengen hvis analysen mislykkes
     
     # Returner den formaterte datoen og tiden (dag.måned.år timer:minutter:sekunder)
     return dt.strftime("%d.%m.%Y %H:%M")
 
 
-
+#Ikke i bruk
 def konvertere_sekunder(sekunder):
     #Bruker prosent 60 på alle tallene i listen for å få sekunder
     for i in range(len(sekunder)):
@@ -108,7 +106,7 @@ def konvertere_sekunder(sekunder):
     return sekunder
         
 
-
+#Ikke i bruk
 def kobinere_tider(tider, sekunder):
     nye_tider = []
     for tid, sek in zip(tider, sekunder):
@@ -133,39 +131,33 @@ def fylle_inn_verdier_b_trykk(b_trykk):
 
 # dag.måned.år timer:minutter:sekunder
 r_dates_times = []
-
-# dag.måned.år
-
 # timer:minutter
 r_times = []
-# nr
+# nr/Sekunder
 r_nrs = []
-# sekduner
-
-# timer:minutter:sekunder
-
-# dag.måned.år timer:minutter:sekunder
-
-
+#Barometrisk trykk
 r_trykk_b = []
+#Absolutt tryk
 r_trykk_a = []
-r_temps = []       
+#Tempratur
+r_temps = []  
+#Gjennomsnitt temp
+r_temps_g = []    
 
 
+#Fil henter
+r_fil = ("rune_time.csv.txt")
 
-r_fil = ("Oving/Oving_6/trykk_og_temperaturlogg_rune_time.csv.txt")
 
-
-
-#Linje nr som koden skal ignorere/hoppe over.
 
 #Antall linjer som skal brukes. Fra topp og nedover. 
 r_antall_linje = float('inf')
 
 
 
-print (f"Antall linjer {r_antall_linje}")
 
+
+# Splitter verdiene i linjene og lager lister for hver respektive verdi
 for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje):
     r_dates_times.append(date_time)
     r_nrs.append(nr)
@@ -174,14 +166,16 @@ for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje)
     r_temps.append(temp)
 
 
-
+#En teller for å vite hvor mange linjer som blir skrevet ut
 antall_temp_maalinger = len(r_temps)
+#En funksjon for å fylle inn verdier på tomme indexer
 fylle_inn_verdier_b_trykk(r_trykk_b)
 
 
 
 if __name__ == "__main__":
     # Skriv ut resultatene
+    print (f"Antall linjer {r_antall_linje}")
     print(f"Dato og tid: {r_dates_times}")
     print(f"Sekunder: {r_nrs}")
     print(f"r_trykk_b: {r_trykk_b}")
