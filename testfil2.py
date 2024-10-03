@@ -9,4 +9,3 @@ for i in range(3):
     dag = d.datetime(2021, 6, 11+i)
     dt_liste.append(dag)
 
-print(dt_liste)
