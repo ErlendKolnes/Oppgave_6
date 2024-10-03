@@ -131,24 +131,17 @@ def fylle_inn_verdier_b_trykk(b_trykk):
 
 
 # Initialiser lister for å lagre komponentene
-# måned.dag.år
+# dag.måned.år timer:minutter
 r_dates_times = []
-
-# dag.måned.år
-
 # timer:minutter
 r_times = []
-# nr
+# nr/sekunder
 r_nrs = []
-# sekduner
-
-# timer:minutter:sekunder
-
-# dag.måned.år timer:minutter:sekunder
-
-
+#Barometrisk trykk
 r_trykk_b = []
+#Absolutt trykk
 r_trykk_a = []
+#Tempratur
 r_temps = []       
 
 
