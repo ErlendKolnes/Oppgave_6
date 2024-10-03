@@ -12,15 +12,16 @@ for i in range(19):
     else:
         barometrisk_trykk.append("")
 
+# print(barometrisk_trykk)
+
+teller = 0
+for linje in barometrisk_trykk:
+    if linje == "":
+        barometrisk_trykk[teller] = barometrisk_trykk[teller-1]
+    teller += 1
+
 print(barometrisk_trykk)
 
-# teller = 0
-# for linje in barometrisk_trykk:
-#     if linje == "":
-#         barometrisk_trykk[teller] = barometrisk_trykk[teller-1]
-#     teller += 1
-
-# print(barometrisk_trykk)
 
 # dt_liste_test = []
 # for i in range(19):
