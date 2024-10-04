@@ -34,7 +34,13 @@ def r_split_string(r_data, stop_line):
                     nr = parts[1]            
                     trykk1 = parts[2].replace(',', '.')  
                     trykk2n = parts[3].replace(',', '.')  
-                    temp = parts[4].replace(',', '.')  
+                    temp = parts[4].replace(',', '.') 
+
+
+
+
+
+
 
                     yield total_date_time, nr, trykk1, trykk2n, temp, total_date_time, rs_date, rs_time
                 
@@ -58,6 +64,8 @@ for total_date_time, nr, trykk1, trykk2n, temp, date_time, date, time in r_split
     rs_ny_tid.append(time)
     temps.append(float(temp))  # Convert temp to float and store it
 
+
+
 # Convert date and time strings to datetime objects
 rs_dtdato = []
 for i in range(len(rs_ny_dato)):
@@ -69,11 +77,29 @@ for i in range(len(rs_ny_dato)):
     dag = d.datetime(int(date_parts[2]), int(date_parts[0]), int(date_parts[1]), int(time_parts[0]), int(time_parts[1]), int(time_parts[2]))
     rs_dtdato.append(dag)
 
+def pm_am(r_data, rs_dtdato):
+    try:
+        with open(r_data, 'r') as r_fil:
+            r_data_linjer = r_fil.readlines()
+
+            for linjenummer, linje in enumerate(r_data_linjer):
+                if linjenummer == 16778:
+                    # Assuming the time to be converted is at index 1
+                    time_difference = d.timedelta(minutes=720)
+                    rs_dtdato[1] = rs_dtdato[1] + time_difference
+                    print(f"Updated datetime at index 1: {rs_dtdato[1]}")
+    except FileNotFoundError:
+        print(f"Filen {r_data} ble ikke funnet.")
+    except Exception as e:
+        print(f"En feil oppstod: {e}")
+
+# Call the pm_am function with the correct arguments
+pm_am("rune_time.csv.txt", rs_dtdato)
+
 x = rs_dtdato
 y = temps
-#r_temps
-#r_dates_times
-# Plot the data
+
+
 plt.figure(figsize=(10, 5))
 plt.plot(x, y, label='Temperature')
 plt.xlabel('Date and Time')

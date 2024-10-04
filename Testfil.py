@@ -2,7 +2,7 @@
 
 from sola_time import *
 
-from testfil2 import *
+from gjennomsnitt_temp import *
 
 import matplotlib.pyplot as plt
 
