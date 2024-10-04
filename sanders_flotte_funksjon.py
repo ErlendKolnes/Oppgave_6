@@ -35,13 +35,18 @@ def r_split_string(r_data, stop_line):
         print(f"En feil oppstod: {e}")     
 
 
-stop_line = 220222
+stop_line = len()
 r_fil = "rune_time.csv.txt"
 rs_date_times = []  # Correct initialization
 
 # Pass stop_line instead of r_antall_linje
 for date_time, nr, trykk1, trykk2n, temp in r_split_string(r_fil, stop_line):
     rs_date_times.append(date_time)  # Append date_time
+
+rs_ny_dato = []
+rs_ny_tid=[]
+rs_dato_1=[]
+
 
 
 # Funksjon for å korrigere feil som '00:00' i 12-timers format
@@ -60,13 +65,23 @@ def konvertere_dato_tid(datoer):
     except ValueError:
         return datoer
 
-print(rs_date_times)
-#datoer=konvertere_dato_tid(rs_date_times)
-#print(datoer)
-# Konverter datoer til datetime-objekter
-#konverterte_datoer = [konvertere_dato_tid(dato) for dato in rs_date_times]
+# Example: splitting the third date-time entry into date and time
+total_date_time = rs_date_times[2].split()
 
 
-# Optional: Print some of the collected data
-print(f"Total date_times collected: {len(rs_date_times)}")
-#print(konverterte_datoer)  # Print converted dates for verification
+
+
+x=len(date_time)
+
+
+
+# Check if both date and time exist after Splitting
+if i in range(x)
+    if len(total_date_time) >= 2:
+        rs_date = total_date_time[0]  # First part is the date
+        rs_time = total_date_time[1]  # Second part is the time
+    else:
+        rs_date = total_date_time[0]  # If no time is present, just assign the date
+        rs_time = "00:00:00"  # Fallback for missing time
+
+print(f"Date: {rs_date}, Time: {rs_time}")
