@@ -73,7 +73,7 @@ print(len(rs_ny_tid))    # Should print the number of time entries
 print(rs_ny_dato)
 print(rs_ny_tid)
 
-s_dt_dato = []
+rs_dtdato = []
 
 
 for i in range(len(rs_ny_dato)):
@@ -84,7 +84,7 @@ for i in range(len(rs_ny_dato)):
     
     # Create a datetime object using the components
     dag = d.datetime(int(date_parts[2]), int(date_parts[0]), int(date_parts[1]), int(time_parts[0]), int(time_parts[1]), int(time_parts[2]))
-    s_dt_dato.append(dag)
+    rs_dtdato.append(dag)
 
 
 # Print the datetime objects to verify
@@ -96,8 +96,8 @@ for i in range(len(rs_ny_dato)):
 #rs_time = d.datetime.strftime("%H:%M:%S")
 
 #x=len(date_time)
-
-print(s_dt_dato)
+del rs_date_times[5]
+print(rs_dtdato)
 
 
 

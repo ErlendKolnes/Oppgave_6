@@ -1,21 +1,17 @@
 
 
 import  matplotlib.pyplot as plt
-import datetime as d
-#from datetime import datetime
+from datetime import datetime
 
 
 # Funksjon for å dele opp strengen i komponenter
-def r_split_string(r_data, stop_line,):
-    #if r_ignorer_linje is None:
-    #    r_ignorer_linje = []
-
+def r_split_string(r_data, stop_line):
     try:
         with open(r_data, 'r') as r_fil:
             r_data_linjer = r_fil.readlines()
 
             for linjenummer, linje in enumerate(r_data_linjer, start=1):
-                if linjenummer == 1:
+                if linjenummer in [1]:
                     continue
 
                 elif linjenummer > stop_line:
@@ -39,20 +35,9 @@ def r_split_string(r_data, stop_line,):
                     # Hent dato og tid fra første del
                     #Splitter dato og tid i to lister
                     
-                    date_time_str = parts[0]
-
-                    try:
-                        if "/" in date_time_str:
-                            date_time = d.datetime.strptime(date_time_str, "%m/%d/%Y %I:%M %p")
-                        else:
-                            date_time = d.datetime.strptime(date_time, "%m.%d.%Y %H:%M")
-                    except ValueError:
-                        print(f"Ugyldig dato/tid format på linje {linjenummer}: {parts[0]}")
-                        continue
-
-                    #date_time_2 = date_time_1.replace("am", "").replace("pm", "")
+                    date_time_1 = parts[0]
                     
-                    #date_time = konvertere_dato_tid(date_time)
+                    date_time = konvertere_dato_tid(date_time_1)
                     #konvertere_dato_tid(date_time)  
 
 
@@ -60,13 +45,8 @@ def r_split_string(r_data, stop_line,):
                     nr = parts[1]
 
                     trykk1 = parts[2].replace(',', '.')
-                    trykk2n = parts[3].replace(',', '.')
-                    tempn = parts[4].replace(',', '.')
-
-                    
-                    trykk2 = float(trykk2n)
-                    temp = float(tempn)
-                
+                    trykk2 = parts[3].replace(',', '.')
+                    temp = parts[4].replace(',', '.')
 
 
                     
@@ -94,37 +74,32 @@ def korriger_tid_format(datoer):
 # Funksjon for å konvertere dato og tid til ønsket format
 def konvertere_dato_tid(datoer):
 
-    
-       
+    datoer = korriger_tid_format(datoer)
+    #sekunder = konvertere_sekunder(sekunder)
 
-    if "am" in datoer.lower() or "pm" in datoer.lower():   
-        datoer = korriger_tid_format(datoer)  
+    
+
+    if "am" in datoer.lower() or "pm" in datoer.lower():     
         try:
-            dt = d.datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
+            dt = datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
         except ValueError:
             return datoer
                 
     else:
         try:   
             # Forsøk å analysere dato og tid i det første formatet (måned.dag.år timer:minutter)
-            dt = d.datetime.strptime(datoer, "%m.%d.%Y %H:%M")
+            dt = datetime.strptime(datoer, "%m.%d.%Y %H:%M")
         except ValueError:
             return datoer
                   
-            # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
-            # Returner den opprinnelige strengen hvis analysen mislykkes
+                # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
+              # Returner den opprinnelige strengen hvis analysen mislykkes
     
     # Returner den formaterte datoen og tiden (dag.måned.år timer:minutter:sekunder)
-    
-    
-    #print(dt)
-    
-    return dt
-   
+    return dt.strftime("%d.%m.%Y %H:%M")
 
-    
 
-#Ikke i bruk
+
 def konvertere_sekunder(sekunder):
     #Bruker prosent 60 på alle tallene i listen for å få sekunder
     for i in range(len(sekunder)):
@@ -133,7 +108,7 @@ def konvertere_sekunder(sekunder):
     return sekunder
         
 
-#Ikke i bruk
+
 def kobinere_tider(tider, sekunder):
     nye_tider = []
     for tid, sek in zip(tider, sekunder):
@@ -150,42 +125,40 @@ def fylle_inn_verdier_b_trykk(b_trykk):
     for element in b_trykk:
         if element == '':
             b_trykk[teller] = b_trykk[teller-1]
-        b_trykk[teller] = float(b_trykk[teller])
         teller += 1
 
 
 
 
-
-# dag.måned.år timer:minutter:sekunder
+# Initialiser lister for å lagre komponentene
+# dag.måned.år timer:minutter
 r_dates_times = []
 # timer:minutter
 r_times = []
-# nr/Sekunder
+# nr/sekunder
 r_nrs = []
 #Barometrisk trykk
 r_trykk_b = []
-#Absolutt tryk
+#Absolutt trykk
 r_trykk_a = []
 #Tempratur
-r_temps = []  
-#Gjennomsnitt temp
-r_temps_g = []    
+r_temps = []       
 
 
-#Fil henter
+
 r_fil = ("rune_time.csv.txt")
 
 
 
+#Linje nr som koden skal ignorere/hoppe over.
+
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = 12099 #float("inf")
+r_antall_linje = 12099#float('inf')
 
 
 
+print (f"Antall linjer {r_antall_linje}")
 
-
-# Splitter verdiene i linjene og lager lister for hver respektive verdi
 for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje):
     r_dates_times.append(date_time)
     r_nrs.append(nr)
@@ -194,21 +167,16 @@ for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje)
     r_temps.append(temp)
 
 
-#En teller for å vite hvor mange linjer som blir skrevet ut
+
 antall_temp_maalinger = len(r_temps)
-antall_dager = len(r_dates_times)
-#En funksjon for å fylle inn verdier på tomme indexer
 fylle_inn_verdier_b_trykk(r_trykk_b)
-
-
 
 
 
 if __name__ == "__main__":
     # Skriv ut resultatene
-    #print (f"Antall linjer {r_antall_linje}")
     print(f"Dato og tid: {r_dates_times}")
-    #rint(f"Sekunder: {r_nrs}")
+    #print(f"Sekunder: {r_nrs}")
     #print(f"r_trykk_b: {r_trykk_b}")
     #print(f"r_trykk_a: {r_trykk_a}")
     #print(f"Tempratur: {r_temps}")
