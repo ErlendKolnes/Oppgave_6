@@ -73,6 +73,21 @@ print(len(rs_ny_tid))    # Should print the number of time entries
 print(rs_ny_dato)
 print(rs_ny_tid)
 
+s_dt_dato = []
+
+
+for i in range(len(rs_ny_dato)):
+    # Split the date and time strings into their components
+    date_parts = rs_ny_dato[i].split('.')
+    time_parts = rs_ny_tid[i].split(':')
+    
+    
+    # Create a datetime object using the components
+    dag = d.datetime(int(date_parts[2]), int(date_parts[0]), int(date_parts[1]), int(time_parts[0]), int(time_parts[1]), int(time_parts[2]))
+    s_dt_dato.append(dag)
+
+
+# Print the datetime objects to verify
 # Example: splitting the third date-time entry into date and time
 
 
@@ -81,6 +96,9 @@ print(rs_ny_tid)
 #rs_time = d.datetime.strftime("%H:%M:%S")
 
 #x=len(date_time)
+
+print(s_dt_dato)
+
 
 
 
