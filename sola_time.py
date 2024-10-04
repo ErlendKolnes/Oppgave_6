@@ -68,7 +68,7 @@ for i in range(len(s_ny_dato)):
     s_dt_dato.append(dag)
 
 
-
+print(s_dt_dato)
 #Testing av listene for å sjekke at ting stemmer
 # print("Her er dato:", "\n", s_dato_l, "\n")
 # print("Her er tid:", "\n", s_tid_l, "\n")

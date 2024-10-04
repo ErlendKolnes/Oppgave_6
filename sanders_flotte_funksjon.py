@@ -1,5 +1,5 @@
 import datetime as d
-
+import  matplotlib.pyplot as plt
 def r_split_string(r_data, stop_line):
     try:
         with open(r_data, 'r') as r_fil:  # Use r_data parameter for file name

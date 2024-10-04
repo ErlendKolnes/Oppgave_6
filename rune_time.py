@@ -179,7 +179,7 @@ r_fil = ("rune_time.csv.txt")
 
 
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = 12500 #float("inf")
+r_antall_linje = 12099 #float("inf")
 
 
 
@@ -208,7 +208,7 @@ if __name__ == "__main__":
     # Skriv ut resultatene
     #print (f"Antall linjer {r_antall_linje}")
     print(f"Dato og tid: {r_dates_times}")
-    p#rint(f"Sekunder: {r_nrs}")
+    #rint(f"Sekunder: {r_nrs}")
     #print(f"r_trykk_b: {r_trykk_b}")
     #print(f"r_trykk_a: {r_trykk_a}")
     #print(f"Tempratur: {r_temps}")
