@@ -1,7 +1,9 @@
 
 
+
 import  matplotlib.pyplot as plt
-from datetime import datetime
+import datetime as d
+#from datetime import datetime
 
 
 # Funksjon for å dele opp strengen i komponenter
@@ -45,8 +47,13 @@ def r_split_string(r_data, stop_line):
                     nr = parts[1]
 
                     trykk1 = parts[2].replace(',', '.')
-                    trykk2 = parts[3].replace(',', '.')
-                    temp = parts[4].replace(',', '.')
+                    trykk2n = parts[3].replace(',', '.')
+                    tempn = parts[4].replace(',', '.')
+
+                    
+                    trykk2 = float(trykk2n)
+                    temp = float(tempn)
+                
 
 
                     
@@ -74,32 +81,37 @@ def korriger_tid_format(datoer):
 # Funksjon for å konvertere dato og tid til ønsket format
 def konvertere_dato_tid(datoer):
 
-    datoer = korriger_tid_format(datoer)
-    #sekunder = konvertere_sekunder(sekunder)
-
     
+       
 
-    if "am" in datoer.lower() or "pm" in datoer.lower():     
+    if "am" in datoer.lower() or "pm" in datoer.lower():   
+        datoer = korriger_tid_format(datoer)  
         try:
-            dt = datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
+            dt = d.datetime.strptime(datoer, "%m/%d/%Y %I:%M %p")
         except ValueError:
             return datoer
                 
     else:
         try:   
             # Forsøk å analysere dato og tid i det første formatet (måned.dag.år timer:minutter)
-            dt = datetime.strptime(datoer, "%m.%d.%Y %H:%M")
+            dt = d.datetime.strptime(datoer, "%m.%d.%Y %H:%M")
         except ValueError:
             return datoer
                   
-                # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
-              # Returner den opprinnelige strengen hvis analysen mislykkes
+            # Forsøk å analysere dato og tid i det andre formatet (måned/dag/år timer:minutter:sekunder am/pm)
+            # Returner den opprinnelige strengen hvis analysen mislykkes
     
     # Returner den formaterte datoen og tiden (dag.måned.år timer:minutter:sekunder)
-    return dt.strftime("%d.%m.%Y %H:%M")
+    
+    
+    #print(dt)
+    
+    return dt
+   
 
+    
 
-
+#Ikke i bruk
 def konvertere_sekunder(sekunder):
     #Bruker prosent 60 på alle tallene i listen for å få sekunder
     for i in range(len(sekunder)):
@@ -108,7 +120,7 @@ def konvertere_sekunder(sekunder):
     return sekunder
         
 
-
+#Ikke i bruk
 def kobinere_tider(tider, sekunder):
     nye_tider = []
     for tid, sek in zip(tider, sekunder):
@@ -125,40 +137,42 @@ def fylle_inn_verdier_b_trykk(b_trykk):
     for element in b_trykk:
         if element == '':
             b_trykk[teller] = b_trykk[teller-1]
+        b_trykk[teller] = float(b_trykk[teller])
         teller += 1
 
 
 
 
-# Initialiser lister for å lagre komponentene
-# dag.måned.år timer:minutter
+
+# dag.måned.år timer:minutter:sekunder
 r_dates_times = []
 # timer:minutter
 r_times = []
-# nr/sekunder
+# nr/Sekunder
 r_nrs = []
 #Barometrisk trykk
 r_trykk_b = []
-#Absolutt trykk
+#Absolutt tryk
 r_trykk_a = []
 #Tempratur
-r_temps = []       
+r_temps = []  
+#Gjennomsnitt temp
+r_temps_g = []    
 
 
-
+#Fil henter
 r_fil = ("rune_time.csv.txt")
 
 
 
-#Linje nr som koden skal ignorere/hoppe over.
-
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = 12099#float('inf')
+r_antall_linje = 12099 #float("inf")
 
 
 
-print (f"Antall linjer {r_antall_linje}")
 
+
+# Splitter verdiene i linjene og lager lister for hver respektive verdi
 for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje):
     r_dates_times.append(date_time)
     r_nrs.append(nr)
@@ -167,14 +181,19 @@ for date_time, nr, trykk1, trykk2, temp in r_split_string(r_fil, r_antall_linje)
     r_temps.append(temp)
 
 
-
+#En teller for å vite hvor mange linjer som blir skrevet ut
 antall_temp_maalinger = len(r_temps)
+antall_dager = len(r_dates_times)
+#En funksjon for å fylle inn verdier på tomme indexer
 fylle_inn_verdier_b_trykk(r_trykk_b)
+
+
 
 
 
 if __name__ == "__main__":
     # Skriv ut resultatene
+    #print (f"Antall linjer {r_antall_linje}")
     print(f"Dato og tid: {r_dates_times}")
     #print(f"Sekunder: {r_nrs}")
     #print(f"r_trykk_b: {r_trykk_b}")

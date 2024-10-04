@@ -1,12 +1,14 @@
 import datetime as d
-import  matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+from rune_time import *
+
 def r_split_string(r_data, stop_line):
     try:
-        with open(r_data, 'r') as r_fil:  # Use r_data parameter for file name
+        with open(r_data, 'r') as r_fil:
             r_data_linjer = r_fil.readlines()
 
             for linjenummer, linje in enumerate(r_data_linjer):
-                if linjenummer < 12099:  # Skip lines until we reach line 12100
+                if linjenummer < 12099:  #12099 Skip lines until we reach line 12100
                     continue
                 
                 elif linjenummer > stop_line:  # Exit the loop if the line number exceeds the stop line
@@ -21,7 +23,7 @@ def r_split_string(r_data, stop_line):
                     if len(parts) < 5:
                         continue
                     
-                     # Extract date/time
+                    # Extract date/time
                     total_date_time = parts[0].split(" ")  # Split date and time
                     for_date = total_date_time[0]  # First part is the date
                     for_time = total_date_time[1]  # Second part is the time
@@ -29,18 +31,12 @@ def r_split_string(r_data, stop_line):
                     rs_date = for_date.replace("/", ".")  # Replace / with .
                     rs_time = for_time.replace(",", ".")  # Replace , with .
 
-
-
-
-
                     nr = parts[1]            
                     trykk1 = parts[2].replace(',', '.')  
                     trykk2n = parts[3].replace(',', '.')  
                     temp = parts[4].replace(',', '.')  
 
-                    
-
-                    yield total_date_time, nr, trykk1, trykk2n, temp,total_date_time,rs_date,rs_time
+                    yield total_date_time, nr, trykk1, trykk2n, temp, total_date_time, rs_date, rs_time
                 
     except FileNotFoundError:
         print(f"Filen {r_data} ble ikke funnet.")
@@ -53,51 +49,47 @@ r_fil = "rune_time.csv.txt"
 rs_date_times = []  # Correct initialization
 rs_ny_dato = []
 rs_ny_tid = []
+temps = []
 
 # Pass stop_line instead of r_antall_linje
 for total_date_time, nr, trykk1, trykk2n, temp, date_time, date, time in r_split_string(r_fil, stop_line):
     rs_date_times.append(total_date_time)
     rs_ny_dato.append(date)
     rs_ny_tid.append(time)
+    temps.append(float(temp))  # Convert temp to float and store it
 
-# Print all dates and times
-#for date, time in zip(rs_ny_dato, rs_ny_tid):
- #   print(f"Date: {date}, Time: {time}")
-
-
-print(type(rs_ny_dato))  # Should print <class 'list'>
-print(type(rs_ny_tid))   # Should print <class 'list'>
-print(len(rs_ny_dato))   # Should print the number of date entries
-print(len(rs_ny_tid))    # Should print the number of time entries
-
-print(rs_ny_dato)
-print(rs_ny_tid)
-
+# Convert date and time strings to datetime objects
 rs_dtdato = []
-
-
 for i in range(len(rs_ny_dato)):
     # Split the date and time strings into their components
     date_parts = rs_ny_dato[i].split('.')
     time_parts = rs_ny_tid[i].split(':')
     
-    
     # Create a datetime object using the components
     dag = d.datetime(int(date_parts[2]), int(date_parts[0]), int(date_parts[1]), int(time_parts[0]), int(time_parts[1]), int(time_parts[2]))
     rs_dtdato.append(dag)
 
-
-# Print the datetime objects to verify
-# Example: splitting the third date-time entry into date and time
-
+x = rs_dtdato
+y = temps
+#r_temps
+#r_dates_times
+# Plot the data
+plt.figure(figsize=(10, 5))
+plt.plot(x, y, label='Temperature')
+plt.xlabel('Date and Time')
+plt.ylabel('Temperature')
+plt.title('Temperature over Time')
+plt.legend()
+plt.grid(True)
+plt.show()
 
 
 #rs_date = d.datetime.strftime("%d.%m.%Y")
 #rs_time = d.datetime.strftime("%H:%M:%S")
 
 #x=len(date_time)
-del rs_date_times[5]
-print(rs_dtdato)
+#del rs_date_times[5]
+#print(rs_dtdato)
 
 
 
