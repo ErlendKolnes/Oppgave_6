@@ -206,10 +206,10 @@ fylle_inn_verdier_b_trykk(r_trykk_b)
 
 if __name__ == "__main__":
     # Skriv ut resultatene
-    print (f"Antall linjer {r_antall_linje}")
+    #print (f"Antall linjer {r_antall_linje}")
     print(f"Dato og tid: {r_dates_times}")
-    print(f"Sekunder: {r_nrs}")
-    print(f"r_trykk_b: {r_trykk_b}")
-    print(f"r_trykk_a: {r_trykk_a}")
-    print(f"Tempratur: {r_temps}")
-    print(f"Antall temp maalinger: {antall_temp_maalinger}")
+    p#rint(f"Sekunder: {r_nrs}")
+    #print(f"r_trykk_b: {r_trykk_b}")
+    #print(f"r_trykk_a: {r_trykk_a}")
+    #print(f"Tempratur: {r_temps}")
+    #print(f"Antall temp maalinger: {antall_temp_maalinger}")
