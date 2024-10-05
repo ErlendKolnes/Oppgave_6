@@ -16,7 +16,8 @@ def splitsolatime(data):
 
     # Hent trykk
     s_trykk_n = s_parts[4].replace(",", ".")
-    s_trykk = float(s_trykk_n) #Fjerner newline-tegn, gjør om til float-variabel
+    fs_trykk = float(s_trykk_n) #Fjerner newline-tegn, gjør om til float-variabel
+    s_trykk = (fs_trykk/10)
 
     # Hent tempertur
     s_temp_n = s_parts[3].replace(",", ".")
@@ -68,7 +69,7 @@ for i in range(len(s_ny_dato)):
     s_dt_dato.append(dag)
 
 
-print(s_dt_dato)
+#print(s_dt_dato)
 #Testing av listene for å sjekke at ting stemmer
 # print("Her er dato:", "\n", s_dato_l, "\n")
 # print("Her er tid:", "\n", s_tid_l, "\n")
