@@ -3,7 +3,7 @@ import datetime as d
 
 from sola_time import *
 from rune_time import *
-#from sanders_flotte_funksjon import *
+from samling_av_div 
 from gjennomsnitt_temp import *
 from Testfil import *
 
