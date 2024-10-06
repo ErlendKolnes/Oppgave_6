@@ -3,9 +3,7 @@ import datetime as d
 
 from sola_time import *
 from rune_time import *
-from samling_av_div 
-from gjennomsnitt_temp import *
-from Testfil import *
+from samling_av_div import *
 
 
 plt.subplot(4, 1, 1)
