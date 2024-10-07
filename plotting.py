@@ -6,7 +6,7 @@ from rune_time import *
 from samling_av_div import *
 
 
-plt.subplot(4, 1, 1)
+plt.subplot(2,1, 1)
 plt.plot(s_dt_dato, s_temp_l, label="Temperatur MET", color="green")
 plt.plot(r_dates_times, r_temps, label="Temperatur", color="blue")
 plt.plot(gyldige_tidspunkter, snitt_temperaturer, label='Gjennomsnittstemperatur', color='orange')
