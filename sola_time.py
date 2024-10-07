@@ -13,10 +13,12 @@ def splitsolatime(data):
     if len(s_date_time) != 0: #For å unngå feil ved "siste linje"
         s_date = s_date_time[0]
         s_time = s_date_time[1]
+    
+    
 
     # Hent trykk
     s_trykk_n = s_parts[4].replace(",", ".")
-    s_trykk = float(s_trykk_n) #Fjerner newline-tegn, gjør om til float-variabel
+    s_trykk = float(s_trykk_n) / 10 #Fjerner newline-tegn, gjør om til float-variabel
 
     # Hent tempertur
     s_temp_n = s_parts[3].replace(",", ".")
@@ -36,6 +38,7 @@ s_trykk_l = []
 s_temp_l = []
 
 
+
 #Splitter opp data og sorterer i overnevnte lister
 for linje in fil_solatime:
     if linje.split(";")[0] == "Sola":
@@ -45,6 +48,7 @@ for linje in fil_solatime:
         s_trykk_l.append(s_trykk)
         s_temp_l.append(s_temp)
 
+print(s_trykk_l)
 
 #Kode for å legge sammen dato og tid i en og samme liste
 #s_dato_tid_l = []
@@ -59,7 +63,8 @@ for i in range(len(s_dato_l)):
     s_ny_dato.append(s_dato_l[i].split("."))
     s_ny_tid.append(s_tid_l[i].split(":"))
 
-
+#print(s_ny_dato)
+#print(s_ny_tid)
 
 #lage datetime-liste
 s_dt_dato = []
