@@ -165,7 +165,7 @@ r_fil = ("rune_time.csv.txt")
 
 
 #Antall linjer som skal brukes. Fra topp og nedover. 
-r_antall_linje = float("inf")
+r_antall_linje = 12099 #float("inf")
 
 
 
