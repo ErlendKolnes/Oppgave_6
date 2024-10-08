@@ -56,10 +56,8 @@ def r_split_string(r_data, stop_line):
                     
                     trykk2 = float(trykk2n)
                     temp = float(tempn)
-                
-
-
-                    
+               
+                   
 
                     yield date_time, nr, trykk1, trykk2, temp
                 
@@ -89,11 +87,6 @@ def korriger_tid_format(datoer):
         # Replace the hour part with 12
         return pattern.sub(r'12:\1', datoer)
     return datoer
-
-
-
-def add_sekunder ():
-    print
 
 
 
@@ -223,7 +216,7 @@ fylle_inn_verdier_b_trykk(r_trykk_b)
 
 
 
-'''
+
 if __name__ == "__main__":
     # Skriv ut resultatene
     print (f"Antall linjer {r_antall_linje}")
@@ -233,4 +226,4 @@ if __name__ == "__main__":
     print(f"r_trykk_a: {r_trykk_a}")
     print(f"Tempratur: {r_temps}")
     print(f"Antall temp maalinger: {antall_temp_maalinger}")
-    '''
+    
