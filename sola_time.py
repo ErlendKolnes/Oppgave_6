@@ -69,7 +69,7 @@ for i in range(len(s_dato_l)):
 #lage datetime-liste
 s_dt_dato = []
 for i in range(len(s_ny_dato)):
-    dag = d.datetime(int(s_ny_dato[i][2]), int(s_ny_dato[i][1]), int(s_ny_dato[i][0]), int(s_ny_tid[i][0]), int(s_ny_tid[i][1]))
+    dag = d.datetime(int(s_ny_dato[i][2]), int(s_ny_dato[i][1]), int(s_ny_dato[i][0]), int(s_ny_tid[i][0]), int(s_ny_tid[i][1]), int("00"))
     s_dt_dato.append(dag)
 
 
