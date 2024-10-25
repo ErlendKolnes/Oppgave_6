@@ -9,18 +9,27 @@ import numpy as np
 start_tid = d.datetime(2021, 6, 11, 17, 31)
 slutt_tid = d.datetime(2021, 6, 12, 3, 5)
 
-#  indeksene til start og slutt
-start_indeks = r_dates_times.index(start_tid)
-slutt_indeks = r_dates_times.index(slutt_tid)
+start_tid_s=d.datetime(2021,6,11,17,00)
+slutt_tid_s=d.datetime(2021, 6, 12, 3, 0)
 
-tid_hoy_lav_x = r_dates_times[start_indeks], r_dates_times[slutt_indeks]
-temp_hoy_lav_y=r_temps[start_indeks], r_temps[slutt_indeks]
+#  indeksene til start og slutt
+start_indeks_r = r_dates_times.index(start_tid)
+slutt_indeks_r = r_dates_times.index(slutt_tid)
+
+start_indeks_s=s_dt_dato.index(start_tid_s)
+slutt_indeks_s=s_dt_dato.index(slutt_tid_s)
+
+tid_hoy_lav_x_r = r_dates_times[start_indeks_r], r_dates_times[slutt_indeks_r]
+temp_hoy_lav_y_r=r_temps[start_indeks_r], r_temps[slutt_indeks_r]
+
+tid_hoy_lav_x_s = s_dt_dato[start_indeks_s],s_dt_dato[slutt_indeks_s]
+temp_hoy_lav_y_s = s_temp_l[start_indeks_s],s_temp_l[slutt_indeks_s]
 
 if __name__ == "__main__":
-    print(start_indeks)
-    print(slutt_indeks)
-    print(tid_hoy_lav_x)
-    print(temp_hoy_lav_y)
+    print(start_indeks_r)
+    print(slutt_indeks_r)
+    print(tid_hoy_lav_x_r)
+    print(temp_hoy_lav_y_r)
 
 
 
