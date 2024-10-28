@@ -30,6 +30,7 @@ plt.figure(figsize=(10, 6))
 
 
 # Bestemmer minste og største temperatur for å dekke hele området i histogrammet
+
 min_temp = min(min(s_temp_l), min(r_temps))
 max_temp = max(max(s_temp_l), max(r_temps))
 
