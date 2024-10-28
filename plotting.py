@@ -25,29 +25,29 @@ plt.legend()
 
 plt.show()
 
-# Lager et histogram for temperaturer fra begge filer
-plt.figure(figsize=(10, 6))
 
 
-# Bestemmer minste og største temperatur for å dekke hele området i histogrammet
+
+
+
 
 min_temp = min(min(s_temp_l), min(r_temps))
 max_temp = max(max(s_temp_l), max(r_temps))
 
 # Bruker 'bins' til å dekke hele grad-intervaller
 plt.subplot(2, 1, 1)
-plt.hist(s_temp_l, bins=range(int(min_temp), int(max_temp) + 1), edgecolor='black', alpha=0.3, label='Temperatur MET', color='blue')
-plt.xlabel('Temperatur (°C)')
+plt.hist(s_temp_l, bins=range(int(min_temp), int(max_temp) + 1), edgecolor='black', label='Temperatur MET', color='blue')
+plt.xlabel('Temperatur C')
 plt.ylabel('Frekvens')
 plt.title('Histogram for Temperatur MET')
 plt.legend(['Temperatur MET'])
 
 plt.subplot(2, 1, 2)
-plt.hist(r_temps, bins=range(int(min_temp), int(max_temp) + 1), edgecolor='red', alpha=0.3, label='Temperatur r',color='green')
-plt.xlabel('Temperatur (°C)')
+plt.hist(r_temps, bins=range(int(min_temp), int(max_temp) + 1), edgecolor='red', label='Temperatur r',color='green')
+plt.xlabel('Temperatur C')
 plt.ylabel('Frekvens')
 plt.title('Histogram av Temperaturer fra Begge Filer')
-plt.legend(['Temperatur r'])# Viser hvilken fil hver farge representerer
+plt.legend(['Temperatur r'])
 
 # Viser plottet
 plt.show()

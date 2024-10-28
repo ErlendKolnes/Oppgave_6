@@ -1,0 +1,33 @@
+import matplotlib.pyplot as plt
+import datetime as d
+
+from sola_time import *
+from rune_time import *
+from samling_av_div import *
+
+
+trykk_differanse = [a - b for a, b in zip(r_trykk_a, r_trykk_b) ]
+
+
+def glidende_gjennomsnitt(data, n=10):
+    smoothed_data = []
+    for i in range(len(data)):
+        start = max(0, i - n)
+        end = min(len(data), i + n + 1)
+        gjennomsnitt = np.mean(data[start:end])
+        smoothed_data.append(gjennomsnitt)
+    return smoothed_data
+
+
+trykk_differanse_glattet = glidende_gjennomsnitt(trykk_differanse, n=10)
+
+if __name__ == "__main__":
+    print(trykk_differanse_glattet)
+    plt.figure(figsize=(12, 6))
+    plt.plot(r_dates_times[:len(trykk_differanse)], trykk_differanse, label='Trykkdifferanse', color='blue')
+    plt.plot(r_dates_times[:len(trykk_differanse_glattet)], trykk_differanse_glattet, label='Glattet Trykkdifferanse', color='orange')
+    plt.xlabel('Tidspunkt')
+    plt.ylabel('Differanse (Absolutt - Barometrisk trykk)')
+    plt.title('Differanse mellom Absolutt og Barometrisk Trykk (med Glidende Gjennomsnitt)')
+    plt.legend()
+    plt.show()
