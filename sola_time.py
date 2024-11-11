@@ -48,7 +48,8 @@ for linje in fil_solatime:
         s_trykk_l.append(s_trykk)
         s_temp_l.append(s_temp)
 
-print(s_trykk_l)
+
+#print(s_trykk_l)
 
 #Kode for å legge sammen dato og tid i en og samme liste
 #s_dato_tid_l = []
@@ -57,6 +58,8 @@ print(s_trykk_l)
 
 
 #Gjør om dato og tidspunkt til egne lister
+
+
 s_ny_dato = []
 s_ny_tid = []
 for i in range(len(s_dato_l)):
