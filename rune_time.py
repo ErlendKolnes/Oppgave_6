@@ -82,7 +82,7 @@ def korriger_tid_format(datoer):
     '''
 def korriger_tid_format(datoer):
     # Regular expression to match times from 00:00 to 00:59
-    pattern = re.compile(r'00:(\d{2})')
+    pattern = re.compile(r'\b00:(\d{2}:\d{2})\b')
     if pattern.search(datoer) and ("am" in datoer.lower() or "pm" in datoer.lower()):
         # Replace the hour part with 12
         return pattern.sub(r'12:\1', datoer)
@@ -97,6 +97,7 @@ def konvertere_dato_tid(datoer, sekunder):
         datoer = korriger_tid_format(datoer)  
         try:
             dt = d.datetime.strptime(datoer, "%m/%d/%Y %I:%M:%S %p")
+            dt = dt.replace(second=sekunder)
             dt = dt.replace(microsecond=0)
             return dt
         except ValueError as e:
@@ -221,9 +222,9 @@ if __name__ == "__main__":
     # Skriv ut resultatene
     print (f"Antall linjer {r_antall_linje}")
     print(f"Dato og tid: {r_dates_times}")
-    print(f"Sekunder: {r_nrs}")
-    print(f"r_trykk_b: {r_trykk_b}")
-    print(f"r_trykk_a: {r_trykk_a}")
-    print(f"Tempratur: {r_temps}")
-    print(f"Antall temp maalinger: {antall_temp_maalinger}")
+    #print(f"Sekunder: {r_nrs}")
+    #print(f"r_trykk_b: {r_trykk_b}")
+    ##print(f"r_trykk_a: {r_trykk_a}")
+    ##print(f"Tempratur: {r_temps}")
+    #print(f"Antall temp maalinger: {antall_temp_maalinger}")
     
